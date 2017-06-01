@@ -5,7 +5,12 @@
   <groupId>bcp.invokedynamic</groupId>
   <artifactId>invokedynamic-test</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Invoke dynamic on virtual method tests</name>
+  <name>Invoke dynamic of virtual method - Tests</name>
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -22,18 +27,29 @@
   <build>
     <plugins>
       <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <fork>true</fork>
+          <compilerArgs>
+            <arg>-verbose</arg>
+            <arg>-XDignore.symbol.file</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>io.takari.polyglot</groupId>
         <artifactId>polyglot-maven-plugin</artifactId>
         <version>0.2.0</version>
         <executions>
           <execution>
-            <id>hello</id>
+            <id>showInfo</id>
             <phase>validate</phase>
             <goals>
               <goal>execute</goal>
             </goals>
             <configuration>
-              <taskId>hello</taskId>
+              <taskId>showInfo</taskId>
             </configuration>
           </execution>
         </executions>

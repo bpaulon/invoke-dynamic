@@ -29,8 +29,6 @@ public class InvokeDynamicTest {
 	}
 
 	public static void main(final String[] args) throws Exception {
-		//System.setProperty("org.slf4j.simpleLogger.logFile", "System.out");
-		
 		TargetObject targetObject = new TargetObject();
 		Constructor<?> constructor = createClass("bcp.invokedynamic.DynamicCaller",
 				TargetObject.class);

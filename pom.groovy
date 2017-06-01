@@ -5,10 +5,12 @@ project {
     artifactId 'invokedynamic-test'
     version '0.0.1-SNAPSHOT'
   
-    name 'Invoke dynamic on virtual method tests'
+    name 'Invoke dynamic of virtual method - Tests'
+    
     properties {
-        'maven.compiler.source' 1.8
-        'maven.compiler.target' 1.8
+        'project.build.sourceEncoding' 'UTF-8'
+        'maven.compiler.source' '1.8'
+        'maven.compiler.target' '1.8'
     }
     
     dependencies {
@@ -18,7 +20,7 @@ project {
             version '1.16.16'
             scope 'compile'
         }
-
+        
         dependency {
             groupId 'org.slf4j'
             artifactId 'slf4j-simple'
@@ -27,13 +29,34 @@ project {
     }
       
   build {
-    //
-    // Arbitrary Groovy code can be executed in any phase in the form of a dynamic plugin
-    //
-    $execute(id: 'hello', phase: 'validate') {
-      println ""
-      println "Hello! Rambling here ...."
-      println ""
+
+    $execute(id: 'showInfo', phase: 'validate') { ec ->
+      println "\n\nProject properties"
+      println ec.getProject().getModel().getProperties()
+      println 'Version : ' + ec.getProject().getModel().getVersion()
+      println 'Group ID : ' + ec.getProject().getModel().getGroupId()
+      println 'Artifact ID : ' + ec.getProject().getModel().getArtifactId()
+      println 'Basedir : ' + ec.basedir()
+      println "\n\n"
+    }
+    
+    /*
+     * It seems that the maven-compiler-plugin doesn't know how to pass a non-standard option
+     * such as '-XDignore.symbol.file'to the Java compiler API. 
+     * Force it to fork the javac compiler 
+     */
+    plugins {
+      plugin {
+        artifactId 'maven-compiler-plugin'
+        version '3.5.1'
+        configuration {
+          fork 'true'
+          compilerArgs {
+            arg '-verbose'
+            arg '-XDignore.symbol.file'
+          }
+        }
+      }
     }           
   }
 }

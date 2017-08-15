@@ -20,7 +20,7 @@ public class InvokeDynamicTest {
 	private static Constructor<?> createClass(String className, Class<?> targetClass)
 			throws Exception {
 
-		byte[] bytecode = DynamicCallerBytecodeCreator.createBytes(className, "");
+		byte[] bytecode = DynamicCallerBytecodeCreator.createBytes(className);
 		writeToFile(bytecode, className);
 		SimpleClassLoader loader = new SimpleClassLoader();
 		Class<?> clazz = loader.defineClass(className, bytecode);
@@ -44,7 +44,7 @@ public class InvokeDynamicTest {
 		try (FileOutputStream fos = new FileOutputStream(classFile)) {
 			fos.write(bytecode);
 		}
-		log.info("Class {} written to file {}", className, classFile);
+		log.info("Class {} written to file {}", className, classFile.getAbsolutePath());
 	}
 
 }

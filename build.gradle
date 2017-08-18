@@ -1,0 +1,32 @@
+apply plugin: 'java'
+
+def env = System.getenv("JAVA_HOME")
+println "JAVA_HOME = ${env}"
+println "Forking compiler in java.home = ${System.properties.'java.home'}\n\n"
+
+compileJava {
+	options.fork = true
+	options.forkOptions.javaHome = new File("${System.properties.'java.home'}")
+	options.compilerArgs << "-XDignore.symbol.file=true"
+}
+  
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+   
+repositories {
+	mavenCentral()
+}
+
+group = "bcp.invokedynamic"
+version = '1.0-SNAPSHOT'
+description = "Invoke dynamic of virtual method - Tests"
+
+dependencies {
+	compile group: 'org.slf4j',
+			name: 'slf4j-simple',
+			version: '1.7.25'
+	
+	compile group: 'org.projectlombok', 
+			name: 'lombok', 
+			version:'1.16.4'
+}
